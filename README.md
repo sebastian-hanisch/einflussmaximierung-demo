@@ -13,10 +13,10 @@ Jeder Informierte gibt die Nachricht an jeden Partner mit derselben Wahrscheinli
 
 ## Befunde und Korrekturen gegenüber dem Plan
 
-- **Gradregel nahe bei Greedy: nur teilweise.** Bei k = 10 liegt sie in 5 von 7 Netztypen bei mindestens 95 % von Greedy (schwache Ausbreitung), bei starker Ausbreitung nur in 3 von 7; im Gitter, im Ring und im Potenzgesetz-Netz verliert sie bis zu 13 %. Das ist kleiner als vermutet, aber nicht überall klein.
+- **Gradregel nahe bei Greedy: nur teilweise.** Bei k = 10 liegt sie in 5 von 7 Netztypen bei mindestens 95 % von Greedy (schwache Ausbreitung, 3 %; Verbünde mit 95,1 % knapp an der Schwelle), bei starker Ausbreitung (15 %) nur in 3 von 7; im Gitter, im Ring und im Potenzgesetz-Netz verliert sie bis zu 13 %. Das ist kleiner als vermutet, aber nicht überall klein.
 - **Hook gewechselt:** Abstand und Redundanz der Starter statt des Vergleichs von Einzelreichweiten (siehe Tabelle).
-- **Die Nähe ist die schlechteste Regel bei mehreren Startern**, obwohl sie in Stück 1 den Einzelstarter am besten vorhersagte: bei einem Starter ist sie gleichwertig, bei mehreren wählt sie benachbarte Knoten.
-- **Die Kernzahl-Auswahl aus Stück 1 ist schwach** (bei kleinem k in heavy-tailed Netzen 0,24 bis 0,62 von Greedy); sie bleibt als einer von mehreren Kandidaten.
+- **Bei mehreren Startern fällt die Nähe in gitter- und ringartigen Netzen und bei Hubs am Rand weit hinter Greedy zurück** (0,45 bis 0,76), in Zufallsnetz und Verbünden liegt sie bei 0,88 bis 0,96. Dabei sagte sie in Stück 1 den Einzelstarter am besten vorher: bei einem Starter ist sie in sechs von sieben Netztypen gleichwertig (Verbünde 0,90 bis 0,94), bei mehreren wählt sie benachbarte Knoten.
+- **Die Kernzahl-Auswahl aus Stück 1 ist vor allem bei kleinem k und schwacher Ausbreitung schwach** (k = 1, 3 %, in heavy-tailed Netzen 0,24 bis 0,62 von Greedy); bei k = 10 und 15 % liegt sie in sechs von sieben Netztypen bei 0,91 bis 0,97, nur bei Hubs am Rand bei 0,71. Sie bleibt als einer von mehreren Kandidaten.
 - **Gleichstandsregel als Fehlerquelle:** Degree Discount mit der Regel „kleinste Knotennummer“ verliert im Gitter 23 bis 26 Prozentpunkte gegenüber zufälliger Auflösung. Die Demo löst Gleichstände zufällig auf (Mittel über zehn Ziehungen) und zeigt die Index-Regel als eigenes Verfahren.
 - **Greedy liefert keine eindeutige Menge:** acht Läufe auf frischen Schnappschüssen ergeben acht verschiedene Mengen mit fast gleichem Spread.
 - **Mittlerer Abstand über verbundene Paare:** nicht erreichbare Paare (Link-Netz: der einzige Knoten ohne Verlinkung) zählen nicht mit.
@@ -46,13 +46,13 @@ Alle Zahlen stehen in `tests/test_claims.py`. Netze der Messreihen: die acht fes
 |---|---|
 | **Stimmen die Bausteine?** | Zusammenhangskomponenten der Schnappschüsse stimmen mit `networkx` überein; der Schnappschuss-Spread mit dem **exakten Spread** durch Aufzählung aller 2^m Kantenzustände (30 kleine Netze, Band 0,2 Knoten); CELF liefert dieselbe Auswahl wie naives Greedy (40 Netze); Nähe, Betweenness, PageRank und Kernzahl stimmen mit `networkx` überein (60 Netze); Degree Discount mit einer unabhängig geschriebenen Neuberechnung der Formel (`tests/test_oracle_einflussmaximierung.py`) |
 | **Wie nah liegt die Gradregel bei Greedy?** (k = 10, Ausbreitungsstärke 3 % / 15 %) | Zufallsnetz **0,97 / 0,98**, Potenzgesetz 0,97 / **0,92**, skalenfrei 0,97 / 0,94, Verbünde 0,95 / 0,96, Ring **0,89 / 0,90**, Gitter **0,87 / 0,91**, Hubs am Rand 0,99 / 0,98. In 5 von 7 (schwache) bzw. 3 von 7 (starke Ausbreitung) Netztypen mindestens 0,95 |
-| **Wie schlecht ist die Nähe?** (k = 10, 3 % / 15 %) | Gitter **0,45 / 0,60**, Ring 0,67 / 0,76, Hubs am Rand 0,69 / 0,71, Verbünde 0,88 / 0,94, Zufallsnetz 0,92 / 0,96. Bei **einem** Starter dagegen gleichwertig: Gitter bei k = 1 gleichauf mit Greedy, bei k = 20 nur 0,45 |
-| **Und die anderen Maße?** (k = 10, 3 %) | Betweenness im Gitter 0,47, PageRank 0,52; Kernzahl 0,69 (Hubs, Zufall 0,83, skalenfrei 0,76); Zufall zwischen 0,69 und 0,82. **Degree Discount** (zufällige Auflösung der Gleichstände) erreicht in 5 von 7 Netztypen 1,00, im Gitter und im Ring 0,89 bis 0,94 |
+| **Wie schlecht ist die Nähe?** (k = 10, 3 % / 15 %) | Gitter **0,45 / 0,60**, Ring 0,67 / 0,76, Hubs am Rand 0,69 / 0,71, Verbünde 0,88 / 0,94, Zufallsnetz 0,92 / 0,96. Bei **einem** Starter dagegen in sechs von sieben Netztypen gleichwertig (Verbünde 0,90 bis 0,94): Gitter bei k = 1 gleichauf mit Greedy, bei k = 20 nur 0,45 |
+| **Und die anderen Maße?** (k = 10, 3 %) | Betweenness im Gitter 0,47, PageRank 0,52; Kernzahl 0,69 (Hubs), Zufallsnetz 0,83, skalenfrei 0,76, Potenzgesetz-Netz 0,94; Zufall zwischen 0,69 und 0,82. **Degree Discount** (zufällige Auflösung der Gleichstände) erreicht in 5 von 7 Netztypen 1,00, im Gitter und im Ring 0,89 bis 0,94 |
 | **Hubs am Rand: wie hängt der Verlust von k ab?** (15 %, Gradregel) | k = 1: **0,46**, k = 3: 0,86, k = 5: 0,99, k = 10: 0,98; die Kernzahl-Regel: k = 1: 1,00, k = 20: 0,68 (sie wählt zunächst die Kerne, später Randknoten) |
 | **Wie viel verliert Degree Discount durch die Gleichstandsregel?** (k = 10) | Gitter: zufällige Auflösung 0,89 / 0,93 (3 % / 15 %), „kleinste Knotennummer“ **0,63 / 0,70**; Ring bei 15 %: 0,93 gegen 0,91 |
 | **Wählt Greedy Starter weiter auseinander?** (k = 10, 15 %; mittlerer Abstand / Redundanz: Greedy gegen Grad gegen Nähe) | **Potenzgesetz-Netz 3,7 / 0,38 gegen 1,4 / 0,11 gegen 1,3 / 0,11**; skalenfrei 3,0 / 0,24 gegen 1,6 / 0,13; Zufallsnetz 3,1 / 0,24 gegen 2,4 / 0,20; Ring 5,6 gegen 3,7 gegen 2,5; Gitter 9,9 gegen 7,8 gegen **1,7** (Nähe, Redundanz 0,17); Hubs am Rand 3,7 / 0,35 gegen 2,4 / 0,19 gegen **1,3 / 0,10** |
 | **Wie viel spart CELF?** (Ausbreitungsstärke 10 %, k = 10 und 20) | **53 % bis 87 %** der Gewinn-Auswertungen bei **gleicher** Auswahl in allen Netzen: Zufallsnetz 1 149 statt 2 455 (k = 10) und 1 486 statt 4 810 (k = 20), Potenzgesetz 593 und 687, Hubs am Rand 638 und **648 statt 4 810** |
-| **Garantie gegen Wirklichkeit** (40 kleine Zufallsnetze, n = 7 bis 9, exakter Spread bei p = 0,5, k = 2 und 3) | Greedy erreicht im Median **99,3 %** des Optimums, mindestens **92,2 %**, und trifft das Optimum in **29 von 80** Fällen; die Garantie 1 − 1/e = 63,2 % ist weit entfernt |
+| **Garantie gegen Wirklichkeit** (40 kleine Zufallsnetze, n = 7 bis 9, exakter Spread bei p = 0,5, k = 2 und 3) | Greedy erreicht im Median **99,3 %** des Optimums, mindestens **92,2 %**, und trifft das Optimum in **29 von 80** Fällen; die Garantie 1 − 1/e = 63,2 % liegt weit darunter (auf diesen kleinen Netzen; für große Netze nicht gemessen) |
 | **Ist die Auswahl von Greedy eindeutig?** (Zufallsnetz, k = 10, acht Läufe auf frischen Schnappschüssen) | **Nein:** bei 50 wie bei 300 Trainings-Schnappschüssen **8 von 8 verschiedene Mengen**, aber der Spread streut um nur 2,5 bzw. 1,8 Knoten (Median 98,8 bzw. 100,0 von 250) |
 | **Standardnetz** (Zufallsnetz, n = 150, c = 6, Seed 35, Ausbreitungsstärke 10 %, k = 5) | 450 Kanten, p = 0,191; Greedy 52,1 Knoten (Standardfehler 0,7); Degree Discount 100 %, Kernzahl 90 %, Zufall 86 %; mittlerer Abstand der Starter 2,4, Redundanz 0,45; Gewinn-Auswertungen 740 (naiv) gegen 518 (CELF) |
 | **Preset Potenzgesetz-Netz** (n = 150, 15 %, k = 10, Grad) | Grad 90 % von Greedy; Abstand der Starter **1,6 gegen 3,4**, Redundanz **0,13 gegen 0,32** |
@@ -64,15 +64,15 @@ Alle Zahlen stehen in `tests/test_claims.py`. Netze der Messreihen: die acht fes
 
 | | Hypothese | Ergebnis |
 |---|---|---|
-| H1 | Greedy ist die beste Auswahl | ✅ alle Verhältnisse höchstens 1,06 (Schätzrauschen, bewertet auf unabhängigen Schnappschüssen) |
+| H1 | Greedy ist die beste der getesteten Auswahlregeln | ✅ im Median über acht Netze liegt keine Regel mehr als 1,1 % über Greedy (Schätzrauschen, bewertet auf unabhängigen Schnappschüssen); optimal ist Greedy nicht (Experiment 4: Optimum in 29 von 80 Fällen) |
 | H2 | Die Gradregel liegt nahe bei Greedy | ⚠ in 5 von 7 (3 %) bzw. 3 von 7 (15 %) Netztypen bei mindestens 0,95; Ring, Gitter und Potenzgesetz-Netz bei hoher Ausbreitung 0,87 bis 0,92 |
-| H3 | Die Nähe ist auch bei mehreren Startern gut | ❌ schlechteste Regel in Gitter, Ring und bei Hubs am Rand: sie wählt benachbarte Knoten |
+| H3 | Die Nähe ist auch bei mehreren Startern gut | ❌ in Gitter und Ring klar die schlechteste Regel, bei Hubs am Rand gleichauf mit Kernzahl und Zufall (3 %: 0,69): sie wählt benachbarte Knoten |
 | H4 | Greedy verteilt die Starter weiter | ✅ Abstand 3,0 bis 9,9 gegen 1,4 bis 7,8 nach Grad; Redundanz 0,24 bis 0,39 gegen 0,11 bis 0,31 |
-| H5 | Die Kernzahl ist als Auswahlregel schwach | ✅ bei k = 1 in heavy-tailed Netzen 0,24 (skalenfrei) bis 0,62 (Potenzgesetz) von Greedy (3 %), bei k = 10 0,69 bis 0,83 (3 %) |
+| H5 | Die Kernzahl ist als Auswahlregel schwach | ⚠ bei k = 1 in heavy-tailed Netzen 0,24 (skalenfrei) bis 0,62 (Potenzgesetz) von Greedy (3 %), bei k = 10 0,69 bis 0,94 (3 %), im Potenzgesetz-Netz nahezu so gut wie Grad |
 | H6 | CELF liefert dieselbe Auswahl mit weniger Auswertungen | ✅ 53 % bis 87 % weniger |
-| H7 | Die Garantie 1 − 1/e ist praktisch nicht relevant | ✅ Minimum 92,2 % des Optimums |
+| H7 | Greedy liegt weit über der Garantie 1 − 1/e | ✅ Minimum 92,2 % des Optimums, gemessen auf kleinen Netzen (7 bis 9 Knoten); für große Netze nicht gemessen |
 | H8 | Die Menge ist nicht eindeutig, ihr Spread stabil | ✅ 8 von 8 verschiedene Mengen, Streuung 1,8 bis 2,5 Knoten |
-| H9 | Degree Discount liegt nahe bei Greedy | ✅ 1,00 in 5 von 7 Netztypen; im Gitter und im Ring 0,89 bis 0,94, mit „kleinster Index“ im Gitter nur 0,63 / 0,70 |
+| H9 | Degree Discount liegt nahe bei Greedy | ✅ bei 3 %: 1,00 in 5 von 7 Netztypen (bei 15 % 0,93 bis 1,00); im Gitter und im Ring 0,89 bis 0,94, mit „kleinster Index“ im Gitter nur 0,63 / 0,70 |
 | H10 | Im Link-Netz reicht die Gradregel für kleine k | ✅ k = 10: 94,6 %; die Startseite erreicht fast alles |
 
 ## Ehrliche Grenzen

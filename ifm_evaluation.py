@@ -308,7 +308,7 @@ def verdict_guarantee(result: dict) -> tuple[str, str]:
     """Verdikt zu E4: wie weit liegt Greedy tatsächlich vom Optimum, gegen die Garantie 1 − 1/e?"""
     s = guarantee_summary(result)
     return "info", (f"Greedy erreicht im Median {de(100 * s['median'], 1)} % des Optimums, mindestens {de(100 * s['min'], 1)} %, und trifft das Optimum in {s['optimal']} von {s['cases']} Fällen; "
-                    f"die Garantie liegt bei {de(100 * s['bound'], 1)} % und ist in der Praxis weit entfernt (kleine Netze mit n = 7 bis 9 und exaktem Spread bei p = {de(result['p'], 1)}).")
+                    f"die Garantie liegt bei {de(100 * s['bound'], 1)} % und liegt weit darunter (nur gemessen auf kleinen Netzen mit n = 7 bis 9 und exaktem Spread bei p = {de(result['p'], 1)}).")
 
 
 # --- E5: Greedy ist nicht eindeutig -------------------------------------------------------------------------------------------------------------------------

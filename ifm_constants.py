@@ -91,7 +91,7 @@ PRESETS = {
 PRESET_HELP = {
     "Zufallsnetz (Voreinstellung)": "Zufallsnetz, kleine Ausbreitung, fünf Starter: Greedy gegen die einfachen Regeln.",
     "Hubs und Abstand": "Potenzgesetz-Netz, hohe Ausbreitung: die Starter nach Grad liegen dicht beieinander und überdecken sich.",
-    "Gitter: die Nähe versagt": "Auf dem Gitter wählt die Nähe benachbarte Knoten in der Mitte: die schlechteste Regel.",
+    "Gitter: die Nähe versagt": "Auf dem Gitter wählt die Nähe benachbarte Knoten in der Mitte: eine der schwächsten Regeln (die Betweenness liegt gleichauf).",
     "Ring mit Abkürzungen": "Degree Discount mit der Regel „kleinste Knotennummer“ wählt hier Nachbarn; mit zufälliger Auflösung der Gleichstände ist es fast so gut wie Greedy.",
     "Hubs am Rand": "Wenige Hubs mit Blättern am Rand eines dichten Kerns: die Kernzahl wählt Randknoten ohne Wirkung.",
     "Unser Link-Netz": "Das echte Link-Netz von sebastianhanisch.net (alle Seiten): Startseite und Kontaktseite sind mit allen Seiten verlinkt.",
