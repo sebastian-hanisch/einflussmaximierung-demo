@@ -115,6 +115,19 @@ Weiter unten: fünf Experimente (**🔬**), der Abschnitt **🚧 Wo die Annahmen
 """
 )
 
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/einflussmaximierung-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+In einem Netz von Betrieben soll eine Nachricht möglichst viele erreichen, obwohl nur wenige Betriebe direkt informiert werden. Jeder Informierte erzählt sie jedem Partner mit derselben Wahrscheinlichkeit weiter, und zwar nur einmal.
+
+Die Demo spielt dieses Weitererzählen sehr oft durch und stellt ein rechnendes Verfahren, das Betrieb für Betrieb den größten Zuwachs wählt, einfachen Regeln gegenüber, etwa der mit den meisten Kontakten. Gemessen wird, wie viel die einfache Regel verliert und wo. Dazu kommt, wie weit die Starter auseinander liegen und ob die Auswahl überhaupt eindeutig ist. Alle Netze sind erzeugt, dazu ein echtes Verlinkungsnetz einer Website.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/einflussmaximierung-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
+
 with st.expander("So funktioniert Greedy", expanded=True):
     st.markdown(
         """
@@ -283,6 +296,25 @@ st.markdown(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/einflussmaximierung-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben sind ein Netz und eine Zahl $k$ von Startern, die direkt informiert werden. Jeder Informierte gibt die Nachricht jedem Partner mit Wahrscheinlichkeit $p$ weiter. Gesucht ist eine Startmenge $S$ mit $k$ Knoten, die im Mittel möglichst viele Knoten erreicht.
+
+| Symbol | Bedeutung |
+|---|---|
+| $k$ | Zahl der Starter |
+| $p$ | Weitergabewahrscheinlichkeit je Kante |
+| $S$ | Menge der Starter |
+| $\sigma(S)$ | Spread: erwartete Zahl der erreichten Knoten |
+| $\Delta(v \mid S)$ | Zuwachs des Knotens $v$ zur Menge $S$ |
+| $d_v$, $t_v$ | Grad von $v$ und Zahl seiner bereits gewählten Nachbarn |
+| $\rho(S)$ | Redundanz: 1 heißt, die Reichweiten überlappen nicht |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/einflussmaximierung-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Independent Cascade.** Ein Knoten, der in Runde $t$ informiert wird, bekommt einmal die Chance, jeden noch nicht informierten Nachbarn mit Wahrscheinlichkeit $p$ zu informieren. Für ungerichtete Netze mit gleichem $p$ ist das gleichbedeutend mit Erreichbarkeit im Zufallsnetz $G_p$, in dem jede Kante unabhängig mit Wahrscheinlichkeit $p$ bleibt (Schnappschuss). Der **erwartete Spread** einer Startmenge $S$ ist
